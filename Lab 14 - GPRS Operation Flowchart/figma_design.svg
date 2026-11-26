@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350 780" width="1350" height="780" style="background:#1e1e1e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Prototype Connection Noodles -->
+  <g stroke="#059669" stroke-width="2.5" fill="none">
+    <path d="M 440 380 C 470 380, 490 380, 520 380" />
+    <path d="M 880 380 C 910 380, 930 380, 960 380" />
+  </g>
+  <g fill="#ffffff" stroke="#059669" stroke-width="2.5">
+    <circle cx="440" cy="380" r="5" fill="#059669" />
+    <circle cx="520" cy="380" r="5" />
+    <circle cx="880" cy="380" r="5" fill="#059669" />
+    <circle cx="960" cy="380" r="5" />
+  </g>
+
+  <!-- FRAME 1: Overview & Flow Start -->
+  <g id="Frame-1" transform="translate(80, 60)">
+    <!-- Flow 1 badge -->
+    <g transform="translate(0, -38)">
+      <rect width="80" height="24" rx="4" fill="#059669" />
+      <text x="10" y="16" fill="#ffffff" font-size="11" font-weight="700">Flow 1 ▶</text>
+    </g>
+    <text x="0" y="-10" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 1 (Overview)</text>
+    <rect width="360" height="640" rx="8" fill="#f1f5f9" filter="url(#shadow)" />
+    
+    <!-- Header Art Box -->
+    <rect x="20" y="30" width="320" height="150" rx="6" fill="#059669" fill-opacity="0.1" stroke="#059669" stroke-width="1.5" />
+    <circle cx="60" cy="85" r="24" fill="#059669" fill-opacity="0.2" />
+    <text x="60" y="93" text-anchor="middle" font-size="22" font-weight="900" fill="#059669">014</text>
+    <text x="100" y="75" font-size="13" font-weight="700" fill="#0f172a">GPRS Architecture</text>
+    <text x="100" y="95" font-size="11" fill="#64748b">Figma Lab Exercise #14</text>
+    <line x1="40" y1="130" x2="320" y2="130" stroke="#059669" stroke-opacity="0.3" stroke-width="1" />
+    <text x="40" y="155" font-size="10" fill="#64748b">Simulated on Android Small (360x640)</text>
+
+    <!-- Main Title -->
+    <text x="180" y="240" text-anchor="middle" font-size="20" font-weight="800" fill="#0f172a">Flowchart Explaining General</text>
+    <text x="180" y="270" text-anchor="middle" font-size="18" font-weight="800" fill="#059669"> Packet Radio Service (GPRS)</text>
+
+    <!-- Content Card -->
+    <rect x="24" y="320" width="312" height="180" rx="6" fill="#059669" fill-opacity="0.05" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3,3" />
+    <text x="40" y="355" font-size="13" font-weight="700" fill="#059669">Experiment Objectives:</text>
+    <text x="40" y="385" font-size="11" fill="#0f172a">• Design interactive UI &amp; architectural flow</text>
+    <text x="40" y="415" font-size="11" fill="#0f172a">• Analyze protocol &amp; user experience criteria</text>
+    <text x="40" y="445" font-size="11" fill="#0f172a">• Wireframe component states &amp; transitions</text>
+    <text x="40" y="475" font-size="11" fill="#0f172a">• Verify mobile system performance</text>
+
+    <!-- Next Button -->
+    <text x="250" y="605" fill="#f59e0b" font-size="13" font-weight="700" font-style="italic">Next page →</text>
+  </g>
+
+  <!-- FRAME 2: Architecture & Interactions -->
+  <g id="Frame-2" transform="translate(520, 60)">
+    <text x="0" y="-10" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 2 (Architecture)</text>
+    <rect width="360" height="640" rx="8" fill="#f1f5f9" filter="url(#shadow)" />
+
+    <text x="180" y="55" text-anchor="middle" font-size="16" font-weight="700" fill="#059669">System Architecture &amp; Flow</text>
+    
+    <!-- Architecture Diagram Blocks -->
+    <rect x="30" y="80" width="300" height="75" rx="6" fill="#059669" fill-opacity="0.15" stroke="#059669" stroke-width="1.2" />
+    <text x="180" y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">1. Mobile Terminal / Client Interface</text>
+    <text x="180" y="132" text-anchor="middle" font-size="10.5" fill="#64748b">User input • Sensor detection • Radio Link</text>
+
+    <line x1="180" y1="155" x2="180" y2="185" stroke="#059669" stroke-width="2" marker-end="url(#dot)" />
+
+    <rect x="30" y="185" width="300" height="75" rx="6" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1.2" />
+    <text x="180" y="217" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">2. Processing Core &amp; Base Station</text>
+    <text x="180" y="237" text-anchor="middle" font-size="10.5" fill="#64748b">Bandwidth alloc • Protocol logic • Gateway</text>
+
+    <line x1="180" y1="260" x2="180" y2="290" stroke="#f59e0b" stroke-width="2" />
+
+    <rect x="30" y="290" width="300" height="75" rx="6" fill="#059669" fill-opacity="0.15" stroke="#059669" stroke-width="1.2" />
+    <text x="180" y="322" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">3. Network Core / Backend Database</text>
+    <text x="180" y="342" text-anchor="middle" font-size="10.5" fill="#64748b">State management • Security verification</text>
+
+    <!-- Details Box -->
+    <rect x="30" y="390" width="300" height="150" rx="6" fill="#0f172a" fill-opacity="0.04" stroke="#64748b" stroke-width="0.8" />
+    <text x="45" y="420" font-size="12" font-weight="700" fill="#059669">Design Considerations:</text>
+    <text x="45" y="445" font-size="11" fill="#0f172a">• Real-time synchronization latency</text>
+    <text x="45" y="470" font-size="11" fill="#0f172a">• Minimal power &amp; radio footprint</text>
+    <text x="45" y="495" font-size="11" fill="#0f172a">• Error resilience &amp; packet loss safety</text>
+    <text x="45" y="520" font-size="11" fill="#0f172a">• Compliant with 3GPP standards</text>
+
+    <!-- Next Button -->
+    <text x="250" y="605" fill="#f59e0b" font-size="13" font-weight="700" font-style="italic">Next page →</text>
+  </g>
+
+  <!-- FRAME 3: Verification & Execution Result -->
+  <g id="Frame-3" transform="translate(960, 60)">
+    <text x="0" y="-10" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 3 (Result)</text>
+    <rect width="360" height="640" rx="8" fill="#f1f5f9" filter="url(#shadow)" />
+
+    <text x="180" y="60" text-anchor="middle" font-size="17" font-weight="800" fill="#059669">Verification &amp; Result</text>
+
+    <!-- Success Badge -->
+    <circle cx="180" cy="140" r="36" fill="#f59e0b" fill-opacity="0.2" />
+    <path d="M 168 140 L 176 148 L 194 130" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <text x="180" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Lab 14 Executed Successfully</text>
+    <text x="180" y="235" text-anchor="middle" font-size="11" fill="#64748b">Figma Prototype Verified in Mobile Mode</text>
+
+    <!-- Metrics Card -->
+    <rect x="25" y="270" width="310" height="210" rx="6" fill="#059669" fill-opacity="0.08" stroke="#059669" stroke-width="1" />
+    <text x="40" y="305" font-size="12" font-weight="700" fill="#059669">Evaluation Summary:</text>
+    
+    <text x="40" y="335" font-size="11" fill="#0f172a">• Design Completeness: 100%</text>
+    <rect x="40" y="345" width="280" height="6" rx="3" fill="#e2e8f0" />
+    <rect x="40" y="345" width="280" height="6" rx="3" fill="#f59e0b" />
+
+    <text x="40" y="375" font-size="11" fill="#0f172a">• Flow &amp; Interactions: Verified</text>
+    <text x="40" y="405" font-size="11" fill="#0f172a">• Architecture Fidelity: High (Lab Standard)</text>
+    <text x="40" y="435" font-size="11" fill="#0f172a">• Status: Ready for Evaluation &amp; Submission</text>
+
+    <!-- Restart / Complete -->
+    <text x="180" y="580" text-anchor="middle" font-size="13" font-weight="700" fill="#059669">✓ Completed</text>
+  </g>
+</svg>

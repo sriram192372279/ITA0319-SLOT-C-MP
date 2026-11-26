@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1850 1550" width="1850" height="1550" style="background:#1e1e1e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Grid pattern for Figma canvas -->
+    <pattern id="figma-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#2d2d2d" />
+    </pattern>
+    <filter id="frame-shadow" x="-5%" y="-3%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="dot-marker" markerWidth="10" markerHeight="10" refX="5" refY="5">
+      <circle cx="5" cy="5" r="4" fill="#0d99ff" stroke="#ffffff" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Dark Figma canvas background -->
+  <rect width="100%" height="100%" fill="#1e1e1e" />
+  <rect width="100%" height="100%" fill="url(#figma-grid)" />
+
+  <!-- ========================================== -->
+  <!-- PROTOTYPE CONNECTION NOODLES (FIGMA BLUE)  -->
+  <!-- ========================================== -->
+  <g id="Prototype-Noodles" stroke="#0d99ff" stroke-width="2.5" fill="none">
+    <!-- From Android Small - 1 to Android Small - 2 -->
+    <path d="M 440 280 C 490 280, 520 280, 570 280" />
+    
+    <!-- From Android Small - 1 to Android Small - 4 -->
+    <path d="M 260 720 C 260 760, 260 780, 260 840" />
+
+    <!-- From Android Small - 4 to Android Small - 5 -->
+    <path d="M 440 1280 C 490 1280, 540 1200, 610 1200" />
+
+    <!-- From Android Small - 5 to Android Small - 6 -->
+    <path d="M 970 1200 C 1000 1200, 1020 1200, 1050 1200" />
+
+    <!-- From Android Small - 6 to Android Small - 7 -->
+    <path d="M 1410 1200 C 1430 1200, 1445 1200, 1470 1200" />
+  </g>
+
+  <!-- Prototype Connection Dots -->
+  <g id="Prototype-Dots" fill="#ffffff" stroke="#0d99ff" stroke-width="2.5">
+    <!-- Frame 1 exit point -->
+    <circle cx="440" cy="280" r="5" fill="#0d99ff" />
+    <circle cx="260" cy="720" r="5" fill="#0d99ff" />
+    
+    <!-- Frame 2 entry point -->
+    <circle cx="570" cy="280" r="5" />
+    
+    <!-- Frame 4 entry and exit -->
+    <circle cx="260" cy="840" r="5" />
+    <circle cx="440" cy="1280" r="5" fill="#0d99ff" />
+
+    <!-- Frame 5 entry and exit -->
+    <circle cx="610" cy="1200" r="5" />
+    <circle cx="970" cy="1200" r="5" fill="#0d99ff" />
+
+    <!-- Frame 6 entry and exit -->
+    <circle cx="1050" cy="1200" r="5" />
+    <circle cx="1410" cy="1200" r="5" fill="#0d99ff" />
+
+    <!-- Frame 7 entry point -->
+    <circle cx="1470" cy="1200" r="5" />
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 1: Android Small - 1                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-1" transform="translate(80, 80)">
+    <!-- Flow 1 Badge -->
+    <g transform="translate(0, -42)">
+      <rect x="0" y="0" width="84" height="26" rx="4" fill="#0d99ff" />
+      <text x="12" y="17" fill="#ffffff" font-size="12" font-weight="600">Flow 1</text>
+      <!-- Play icon inside rounded rect -->
+      <g transform="translate(56, 5)">
+        <rect x="0" y="0" width="18" height="16" rx="3" fill="#ffffff" fill-opacity="0.25" />
+        <polygon points="6,4 13,8 6,12" fill="#ffffff" />
+      </g>
+    </g>
+
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 1</text>
+
+    <!-- White Frame Body (360 x 640) -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Illustration Canvas Container -->
+    <g transform="translate(18, 55)">
+      <!-- Yellowish/Sand board -->
+      <rect width="324" height="185" rx="6" fill="#ded7a8" stroke="#333333" stroke-width="1.5" />
+      
+      <!-- Heart icon at top left -->
+      <path d="M 12 15 C 10 10, 5 12, 5 16 C 5 21, 12 25, 12 25 C 12 25, 19 21, 19 16 C 19 12, 14 10, 12 15 Z" fill="#ff5252" />
+      
+      <!-- Dots at top right -->
+      <circle cx="305" cy="15" r="3" fill="#4285f4" />
+      <circle cx="313" cy="15" r="3" fill="#ea4335" />
+      <circle cx="305" cy="23" r="3" fill="#fbbc05" />
+      <circle cx="313" cy="23" r="3" fill="#34a853" />
+
+      <!-- Main UI Browser Frame inside -->
+      <rect x="24" y="16" width="276" height="152" rx="4" fill="#eae4c9" stroke="#333333" stroke-width="1.2" />
+      
+      <!-- Browser Top Bar -->
+      <line x1="24" y1="32" x2="300" y2="32" stroke="#333333" stroke-width="1.2" />
+      <circle cx="34" cy="24" r="2.5" fill="#333333" />
+      <circle cx="42" cy="24" r="2.5" fill="#333333" />
+      <circle cx="50" cy="24" r="2.5" fill="#333333" />
+
+      <!-- Wireframe UI Layout Elements -->
+      <!-- Left sidebar items -->
+      <rect x="32" y="40" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+      <rect x="32" y="58" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+      <rect x="32" y="76" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+      <rect x="32" y="94" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+
+      <!-- Center content wireframe card -->
+      <rect x="60" y="42" width="105" height="50" fill="#f5f0db" stroke="#333333" stroke-width="1" />
+      <line x1="68" y1="52" x2="115" y2="52" stroke="#666666" stroke-width="2" />
+      <line x1="68" y1="62" x2="145" y2="62" stroke="#999999" stroke-width="1.5" />
+      <line x1="68" y1="72" x2="135" y2="72" stroke="#999999" stroke-width="1.5" />
+
+      <!-- Sticky Notes / Badges -->
+      <rect x="180" y="40" width="45" height="14" rx="2" fill="#ff7043" />
+      <rect x="110" y="70" width="40" height="14" rx="2" fill="#fbc02d" />
+
+      <!-- Large Image placeholder box with cross (wireframe style) -->
+      <rect x="175" y="60" width="85" height="65" fill="#e2dcbd" stroke="#333333" stroke-width="1" />
+      <line x1="175" y1="60" x2="260" y2="125" stroke="#333333" stroke-width="0.8" />
+      <line x1="260" y1="60" x2="175" y2="125" stroke="#333333" stroke-width="0.8" />
+
+      <!-- Floating popup card -->
+      <rect x="68" y="102" width="75" height="32" rx="3" fill="#e0dac0" stroke="#333333" stroke-width="1" />
+      <rect x="115" y="120" width="22" height="8" rx="2" fill="#90a4ae" />
+
+      <!-- Right tools panel -->
+      <line x1="270" y1="32" x2="270" y2="168" stroke="#333333" stroke-width="1" />
+      <rect x="276" y="40" width="15" height="6" fill="#333333" />
+      <rect x="276" y="52" width="15" height="6" fill="#333333" />
+      <rect x="276" y="64" width="15" height="6" fill="#333333" />
+
+      <!-- Thumbs up icon / designer mark at bottom right -->
+      <g transform="translate(290, 155)">
+        <path d="M 0 5 L 4 5 L 6 0 L 10 0 L 9 5 L 12 5 L 10 12 L 2 12 Z" fill="#fbc02d" stroke="#333333" stroke-width="0.8" />
+      </g>
+    </g>
+
+    <!-- Main Title -->
+    <text x="180" y="360" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000">HANDOFF IN</text>
+    <text x="180" y="405" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000">MOBILE</text>
+    <text x="180" y="450" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000">NETWORK</text>
+
+    <!-- Bottom Next Page Link -->
+    <g transform="translate(250, 605)">
+      <text x="0" y="0" fill="#e91e63" font-size="14" font-weight="700" font-style="italic">Next page →</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 2: Android Small - 2                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-2" transform="translate(570, 30)">
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 2</text>
+
+    <!-- White Frame Body -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Top Navigation: Blue Back Arrow Button -->
+    <g transform="translate(20, 24)">
+      <circle cx="12" cy="12" r="12" fill="#1877f2" />
+      <path d="M 14 7 L 9 12 L 14 17" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <line x1="9" y1="12" x2="17" y2="12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+
+    <!-- Header 1: Handoff: -->
+    <text x="180" y="42" text-anchor="middle" fill="#e91e63" font-size="16" font-weight="700" font-style="italic">Handoff:</text>
+
+    <!-- Paragraph 1 -->
+    <text x="180" y="78" text-anchor="middle" fill="#222222" font-size="12" font-style="italic" line-height="1.4">
+      <tspan x="180" dy="0">Design handoff is the process of</tspan>
+      <tspan x="180" dy="17">handing over a finished design for</tspan>
+      <tspan x="180" dy="17">implementation. It involves</tspan>
+      <tspan x="180" dy="17">transferring a designer's intent,</tspan>
+      <tspan x="180" dy="17">knowledge, and specifications for</tspan>
+      <tspan x="180" dy="17">a design and can include visual</tspan>
+      <tspan x="180" dy="17">elements, user flows, interaction,</tspan>
+      <tspan x="180" dy="17">animation, copy, responsive</tspan>
+      <tspan x="180" dy="17">breakpoints, accessibility, and</tspan>
+      <tspan x="180" dy="17">data validations.</tspan>
+    </text>
+
+    <!-- Header 2: Execution: -->
+    <text x="180" y="295" text-anchor="middle" fill="#e91e63" font-size="16" font-weight="700" font-style="italic">Execution:</text>
+
+    <!-- Paragraph 2 -->
+    <text x="180" y="325" text-anchor="middle" fill="#222222" font-size="12" font-style="italic">
+      <tspan x="180" dy="0">Design handoff tools facilitate</tspan>
+      <tspan x="180" dy="17">smoother transitions from design</tspan>
+      <tspan x="180" dy="17">to development. These tools</tspan>
+      <tspan x="180" dy="17">provide engineers with practical</tspan>
+      <tspan x="180" dy="17">documentation, high-fidelity</tspan>
+      <tspan x="180" dy="17">prototypes, and features to</tspan>
+      <tspan x="180" dy="17">communicate and collaborate</tspan>
+      <tspan x="180" dy="17">effectively.</tspan>
+    </text>
+
+    <!-- Bottom Next Page Link -->
+    <g transform="translate(250, 605)">
+      <text x="0" y="0" fill="#e91e63" font-size="14" font-weight="700" font-style="italic">Next page →</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 3: Android Small - 4                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-4" transform="translate(140, 840)">
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 4</text>
+
+    <!-- White Frame Body -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Section 1 Header: Why do we need handoff? -->
+    <text x="180" y="55" text-anchor="middle" fill="#d81b60" font-size="16" font-weight="700" font-style="italic">Why do we need handoff?</text>
+
+    <!-- Section 1 Paragraph -->
+    <text x="180" y="95" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic">
+      <tspan x="180" dy="0">Mobile-Assisted handoff is</tspan>
+      <tspan x="180" dy="18">generally used when a mobile</tspan>
+      <tspan x="180" dy="18">phone helps a base station to</tspan>
+      <tspan x="180" dy="18">transfer the call to another</tspan>
+      <tspan x="180" dy="18">base station with better-</tspan>
+      <tspan x="180" dy="18">improvised connectivity and</tspan>
+      <tspan x="180" dy="18">more signal strength. This</tspan>
+      <tspan x="180" dy="18">handoff is used in TDMA</tspan>
+      <tspan x="180" dy="18">technique-based GSM devices.</tspan>
+    </text>
+
+    <!-- Section 2 Header: What is a handoff in UX? -->
+    <text x="180" y="320" text-anchor="middle" fill="#00a8cc" font-size="16" font-weight="700" font-style="italic">What is a handoff in UX?</text>
+
+    <!-- Section 2 Paragraph -->
+    <text x="180" y="360" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic">
+      <tspan x="180" dy="0">The Design Handoff plays a</tspan>
+      <tspan x="180" dy="18">vital role in UX projects, serving</tspan>
+      <tspan x="180" dy="18">as a crucial step where</tspan>
+      <tspan x="180" dy="18">designers transfer their work to</tspan>
+      <tspan x="180" dy="18">the development team.</tspan>
+    </text>
+
+    <!-- Bottom Next Page Link -->
+    <g transform="translate(250, 605)">
+      <text x="0" y="0" fill="#e91e63" font-size="14" font-weight="700" font-style="italic">Next page →</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 4: Android Small - 5                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-5" transform="translate(610, 780)">
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 5</text>
+
+    <!-- White Frame Body -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Section 1 Header: Reasons for Handoff: -->
+    <text x="180" y="65" text-anchor="middle" fill="#000000" font-size="16" font-weight="800">Reasons for Handoff:</text>
+
+    <!-- Section 1 Paragraph -->
+    <text x="180" y="110" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic">
+      <tspan x="180" dy="0">Handoff is necessary when a</tspan>
+      <tspan x="180" dy="18">mobile device is moving out of</tspan>
+      <tspan x="180" dy="18">the coverage area of the</tspan>
+      <tspan x="180" dy="18">current cell or when the</tspan>
+      <tspan x="180" dy="18">quality of the connection</tspan>
+      <tspan x="180" dy="18">degrades. The goal is to</tspan>
+      <tspan x="180" dy="18">maintain a reliable and</tspan>
+      <tspan x="180" dy="18">uninterrupted connection.</tspan>
+    </text>
+
+    <!-- Section 2 Paragraph (Note/Instruction) -->
+    <text x="180" y="325" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic">
+      <tspan x="180" dy="0">Use styles to define the color,</tspan>
+      <tspan x="180" dy="18">text and any effects applied to</tspan>
+      <tspan x="180" dy="18">objects; or to define the</tspan>
+      <tspan x="180" dy="18">structure and appearance of</tspan>
+      <tspan x="180" dy="18">layout grids.</tspan>
+    </text>
+
+    <!-- Bottom Next Page Link -->
+    <g transform="translate(250, 605)">
+      <text x="0" y="0" fill="#e91e63" font-size="14" font-weight="700" font-style="italic">Next page →</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 5: Android Small - 6                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-6" transform="translate(1050, 760)">
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 6</text>
+
+    <!-- White Frame Body -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Header: Handoff metrics -->
+    <text x="180" y="55" text-anchor="middle" fill="#d81b60" font-size="16" font-weight="700" font-style="italic">Handoff metrics</text>
+
+    <!-- Paragraph Overview -->
+    <text x="180" y="95" text-anchor="middle" fill="#222222" font-size="12" font-style="italic">
+      <tspan x="180" dy="0">Handoff metrics in a mobile</tspan>
+      <tspan x="180" dy="16">network are measurements and</tspan>
+      <tspan x="180" dy="16">criteria used to determine</tspan>
+      <tspan x="180" dy="16">when and how a handoff</tspan>
+      <tspan x="180" dy="16">should occur. These metrics</tspan>
+      <tspan x="180" dy="16">are crucial for maintaining</tspan>
+      <tspan x="180" dy="16">seamless communication as</tspan>
+      <tspan x="180" dy="16">mobile devices move within the</tspan>
+      <tspan x="180" dy="16">network. Various factors and</tspan>
+      <tspan x="180" dy="16">parameters are considered in</tspan>
+      <tspan x="180" dy="16">making handoff decisions.</tspan>
+      <tspan x="180" dy="16">Here are some key handoff</tspan>
+      <tspan x="180" dy="16">metrics in a mobile network:</tspan>
+    </text>
+
+    <!-- Metrics List (in pink/coral italic) -->
+    <text x="180" y="340" text-anchor="middle" fill="#d81b60" font-size="13" font-weight="600" font-style="italic">
+      <tspan x="180" dy="0">Handoff Hysteresis</tspan>
+      <tspan x="180" dy="20">Signal Strength</tspan>
+      <tspan x="180" dy="20">Signal Quality</tspan>
+      <tspan x="180" dy="20">Distance to Neighbouring Cells</tspan>
+      <tspan x="180" dy="20">Speed of Movement</tspan>
+    </text>
+
+    <!-- Bottom Next Page Link -->
+    <g transform="translate(250, 605)">
+      <text x="0" y="0" fill="#e91e63" font-size="14" font-weight="700" font-style="italic">Next page →</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FRAME 6: Android Small - 7                 -->
+  <!-- ========================================== -->
+  <g id="Frame-Android-Small-7" transform="translate(1470, 760)">
+    <!-- Frame Title -->
+    <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500">Android Small - 7</text>
+
+    <!-- White Frame Body -->
+    <rect width="360" height="640" rx="0" fill="#ffffff" filter="url(#frame-shadow)" />
+
+    <!-- Centered "Thank you!!" in bold neon pink -->
+    <text x="180" y="330" text-anchor="middle" fill="#ff1493" font-size="34" font-weight="900" font-style="italic" letter-spacing="-0.5">Thank you!!</text>
+  </g>
+</svg>

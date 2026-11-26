@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Figma - Handoff in Mobile Network (Prototype & Canvas)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --figma-bg: #1e1e1e;
+      --figma-toolbar: #2c2c2c;
+      --figma-border: #383838;
+      --figma-text: #e0e0e0;
+      --figma-text-muted: #8f8f8f;
+      --figma-blue: #0d99ff;
+      --figma-blue-hover: #0b82d9;
+      --figma-pink: #e91e63;
+      --figma-accent-pink: #ff1493;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: var(--figma-bg);
+      color: var(--figma-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Figma Menu Bar */
+    header.figma-header {
+      height: 48px;
+      background: var(--figma-toolbar);
+      border-bottom: 1px solid var(--figma-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .figma-logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .figma-logo-badge:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .figma-logo-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .file-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .file-tag {
+      font-size: 10px;
+      background: #333;
+      color: #aaa;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #222;
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--figma-border);
+    }
+
+    .tool-btn {
+      background: transparent;
+      border: none;
+      color: var(--figma-text);
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .tool-btn.active {
+      background: var(--figma-blue);
+      color: #fff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: #383838;
+      border: 1px solid #4a4a4a;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      background: #484848;
+      border-color: #5a5a5a;
+    }
+
+    .btn-copy-figma {
+      background: linear-gradient(135deg, #0d99ff 0%, #0077cc 100%);
+      border: none;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(13, 153, 255, 0.35);
+    }
+    .btn-copy-figma:hover {
+      background: linear-gradient(135deg, #1fa4ff 0%, #0088ea 100%);
+      box-shadow: 0 4px 12px rgba(13, 153, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-present {
+      background: #10b981;
+      border: none;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+    }
+    .btn-present:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    /* Sub-bar / Instructions Banner */
+    .figma-banner {
+      background: #171717;
+      border-bottom: 1px solid #2e2e2e;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #b0b0b0;
+    }
+
+    .banner-tips {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .tip-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tip-kbd {
+      background: #2a2a2a;
+      border: 1px solid #3d3d3d;
+      color: #ddd;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* Figma Canvas Viewport */
+    .canvas-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--figma-bg);
+      background-image: radial-gradient(circle, #333 1px, transparent 1px);
+      background-size: 24px 24px;
+      cursor: grab;
+    }
+    .canvas-viewport.dragging {
+      cursor: grabbing;
+    }
+
+    .canvas-transform-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    /* Zoom / Canvas Controls Float */
+    .canvas-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(40, 40, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid #444;
+      padding: 4px 8px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      z-index: 50;
+    }
+
+    .zoom-btn {
+      background: transparent;
+      border: none;
+      color: #ddd;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .zoom-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .zoom-text {
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0 6px;
+      color: #aaa;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0d99ff;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 8px 24px rgba(13, 153, 255, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Prototype Present Modal */
+    .prototype-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 10, 12, 0.92);
+      backdrop-filter: blur(16px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .prototype-modal.active {
+      display: flex;
+    }
+
+    .prototype-top-bar {
+      position: absolute;
+      top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(30, 30, 30, 0.9);
+      border: 1px solid #444;
+      padding: 8px 16px;
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      z-index: 600;
+    }
+    .prototype-badge {
+      background: var(--figma-blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .prototype-screen-label {
+      font-size: 13px;
+      color: #eee;
+      font-weight: 600;
+    }
+    .prototype-btn {
+      background: #404040;
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .prototype-btn:hover {
+      background: #505050;
+    }
+    .prototype-btn-close {
+      background: #ef4444;
+    }
+    .prototype-btn-close:hover {
+      background: #dc2626;
+    }
+
+    /* Mobile Phone Shell */
+    .mobile-device-shell {
+      width: 380px;
+      height: 680px;
+      background: #111;
+      border-radius: 42px;
+      padding: 10px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 2px #333;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .device-screen {
+      flex: 1;
+      background: #fff;
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .device-status-bar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #333;
+      z-index: 10;
+    }
+
+    .device-body {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .proto-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      padding: 12px 20px 24px;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .proto-slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .proto-slide.slide-back {
+      transform: translateX(-30px);
+    }
+
+    /* Clickable Hotspot styling */
+    .clickable-next {
+      cursor: pointer;
+      color: var(--figma-pink);
+      font-size: 14px;
+      font-weight: 700;
+      font-style: italic;
+      text-align: right;
+      margin-top: auto;
+      padding: 8px 4px;
+      display: inline-block;
+      align-self: flex-end;
+      border-radius: 4px;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .clickable-next:hover {
+      transform: translateX(3px);
+      background: rgba(233, 30, 99, 0.08);
+    }
+
+    .back-arrow-btn {
+      width: 28px;
+      height: 28px;
+      background: #1877f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      transition: transform 0.15s;
+      margin-bottom: 8px;
+    }
+    .back-arrow-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Choice selector for Frame 1 */
+    .choice-modal {
+      display: none;
+      position: absolute;
+      bottom: 60px;
+      right: 15px;
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      padding: 8px;
+      z-index: 50;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .choice-modal.open {
+      display: flex;
+    }
+    .choice-btn {
+      background: #333;
+      border: none;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .choice-btn:hover {
+      background: var(--figma-blue);
+    }
+
+    /* Interactive frame hover on SVG Canvas */
+    .svg-frame-group {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .svg-frame-group:hover rect[filter] {
+      stroke: #0d99ff;
+      stroke-width: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Figma Navigation / Toolbar -->
+  <header class="figma-header">
+    <div class="header-left">
+      <div class="figma-logo-badge" title="Figma Prototype Ready">
+        <!-- Figma Logo SVG -->
+        <svg class="figma-logo-icon" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+          <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+          <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+          <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+          <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+        </svg>
+        <span>Figma</span>
+      </div>
+      <div class="file-name">
+        <span>Handoff in Mobile Network</span>
+        <span class="file-tag">Figma Flow 1</span>
+      </div>
+    </div>
+
+    <!-- Center Figma Modes -->
+    <div class="header-center">
+      <button class="tool-btn active" id="btnModeDesign" onclick="setMode('design')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+        Canvas View
+      </button>
+      <button class="tool-btn" id="btnModeProto" onclick="openPrototype('Android Small - 1')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Prototype Flow 1
+      </button>
+    </div>
+
+    <!-- Right Action Buttons -->
+    <div class="header-right">
+      <button class="btn-action" style="background:#6366f1; border-color:#818cf8;" onclick="openFigmaScriptModal()" title="Run in Figma with real interactive page connections">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Run with Page Connections in Figma
+      </button>
+      <button class="btn-action btn-copy-figma" onclick="copyFigmaSVG()" title="Copy as Vector to paste directly into Figma">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copy for Figma (Ctrl+V)
+      </button>
+      <button class="btn-action btn-present" onclick="openPrototype('Android Small - 1')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Present Flow 1
+      </button>
+    </div>
+  </header>
+
+  <!-- Instructional Sub-Bar -->
+  <div class="figma-banner">
+    <div class="banner-tips">
+      <div class="tip-item">
+        <span>💡 Drag canvas to pan</span>
+      </div>
+      <div class="tip-item">
+        <span>🔍 Scroll to zoom (<span class="tip-kbd">Ctrl</span> + Wheel)</span>
+      </div>
+      <div class="tip-item">
+        <span>⚡ Click any frame or <span class="tip-kbd">Present</span> to test the interactive flow</span>
+      </div>
+    </div>
+    <div>
+      <span style="color:#0d99ff; font-weight:600;">Ready for Figma:</span> Click <em>"Copy for Figma"</em> then press <span class="tip-kbd">Ctrl + V</span> in Figma!
+    </div>
+  </div>
+
+  <!-- Main Canvas Viewport (Pannable / Zoomable) -->
+  <div class="canvas-viewport" id="viewport">
+    <div class="canvas-transform-wrapper" id="canvasWrapper">
+      <!-- The Entire Figma Workspace Vector Board -->
+      <svg id="figmaSvgRoot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1900 1550" width="1900" height="1550">
+        <defs>
+          <filter id="frame-shadow" x="-5%" y="-3%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#000000" flood-opacity="0.45"/>
+          </filter>
+        </defs>
+
+        <!-- Prototype Connection Noodles (Figma Blue #0d99ff) -->
+        <g id="Prototype-Noodles" stroke="#0d99ff" stroke-width="2.5" fill="none">
+          <!-- Flow 1 to Frame 2 -->
+          <path d="M 440 280 C 490 280, 520 280, 570 280" />
+          
+          <!-- Flow 1 to Frame 4 -->
+          <path d="M 260 720 C 260 760, 260 780, 260 840" />
+
+          <!-- Frame 4 to Frame 5 -->
+          <path d="M 440 1280 C 490 1280, 540 1200, 610 1200" />
+
+          <!-- Frame 5 to Frame 6 -->
+          <path d="M 970 1200 C 1000 1200, 1020 1200, 1050 1200" />
+
+          <!-- Frame 6 to Frame 7 -->
+          <path d="M 1410 1200 C 1430 1200, 1445 1200, 1470 1200" />
+        </g>
+
+        <!-- Connector Nodes (Pulsing Figma dots) -->
+        <g id="Prototype-Dots" fill="#ffffff" stroke="#0d99ff" stroke-width="2.5">
+          <circle cx="440" cy="280" r="5" fill="#0d99ff" />
+          <circle cx="260" cy="720" r="5" fill="#0d99ff" />
+          <circle cx="570" cy="280" r="5" />
+          <circle cx="260" cy="840" r="5" />
+          <circle cx="440" cy="1280" r="5" fill="#0d99ff" />
+          <circle cx="610" cy="1200" r="5" />
+          <circle cx="970" cy="1200" r="5" fill="#0d99ff" />
+          <circle cx="1050" cy="1200" r="5" />
+          <circle cx="1410" cy="1200" r="5" fill="#0d99ff" />
+          <circle cx="1470" cy="1200" r="5" />
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 1: Android Small - 1                     -->
+        <!-- ============================================== -->
+        <g id="frame-1" class="svg-frame-group" transform="translate(80, 80)" onclick="openPrototype('Android Small - 1')">
+          <!-- Flow 1 Badge -->
+          <g transform="translate(0, -42)">
+            <rect x="0" y="0" width="84" height="26" rx="4" fill="#0d99ff" />
+            <text x="12" y="17" fill="#ffffff" font-size="12" font-weight="600" font-family="'Inter', sans-serif">Flow 1</text>
+            <g transform="translate(56, 5)">
+              <rect x="0" y="0" width="18" height="16" rx="3" fill="#ffffff" fill-opacity="0.25" />
+              <polygon points="6,4 13,8 6,12" fill="#ffffff" />
+            </g>
+          </g>
+
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 1</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <!-- Illustration Board -->
+          <g transform="translate(18, 55)">
+            <rect width="324" height="185" rx="6" fill="#ded7a8" stroke="#333333" stroke-width="1.5" />
+            <!-- Heart icon -->
+            <path d="M 12 15 C 10 10, 5 12, 5 16 C 5 21, 12 25, 12 25 C 12 25, 19 21, 19 16 C 19 12, 14 10, 12 15 Z" fill="#ff5252" />
+            <!-- Dots -->
+            <circle cx="305" cy="15" r="3" fill="#4285f4" />
+            <circle cx="313" cy="15" r="3" fill="#ea4335" />
+            <circle cx="305" cy="23" r="3" fill="#fbbc05" />
+            <circle cx="313" cy="23" r="3" fill="#34a853" />
+
+            <!-- UI Window -->
+            <rect x="24" y="16" width="276" height="152" rx="4" fill="#eae4c9" stroke="#333333" stroke-width="1.2" />
+            <line x1="24" y1="32" x2="300" y2="32" stroke="#333333" stroke-width="1.2" />
+            <circle cx="34" cy="24" r="2.5" fill="#333333" />
+            <circle cx="42" cy="24" r="2.5" fill="#333333" />
+            <circle cx="50" cy="24" r="2.5" fill="#333333" />
+
+            <!-- Sidebar Items -->
+            <rect x="32" y="40" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+            <rect x="32" y="58" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+            <rect x="32" y="76" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+            <rect x="32" y="94" width="18" height="12" fill="#d3ccab" stroke="#333333" stroke-width="1" />
+
+            <!-- Center Content Card -->
+            <rect x="60" y="42" width="105" height="50" fill="#f5f0db" stroke="#333333" stroke-width="1" />
+            <line x1="68" y1="52" x2="115" y2="52" stroke="#666666" stroke-width="2" />
+            <line x1="68" y1="62" x2="145" y2="62" stroke="#999999" stroke-width="1.5" />
+            <line x1="68" y1="72" x2="135" y2="72" stroke="#999999" stroke-width="1.5" />
+
+            <!-- Sticky Badges -->
+            <rect x="180" y="40" width="45" height="14" rx="2" fill="#ff7043" />
+            <rect x="110" y="70" width="40" height="14" rx="2" fill="#fbc02d" />
+
+            <!-- Wireframe Box with Cross -->
+            <rect x="175" y="60" width="85" height="65" fill="#e2dcbd" stroke="#333333" stroke-width="1" />
+            <line x1="175" y1="60" x2="260" y2="125" stroke="#333333" stroke-width="0.8" />
+            <line x1="260" y1="60" x2="175" y2="125" stroke="#333333" stroke-width="0.8" />
+
+            <!-- Popup Card -->
+            <rect x="68" y="102" width="75" height="32" rx="3" fill="#e0dac0" stroke="#333333" stroke-width="1" />
+            <rect x="115" y="120" width="22" height="8" rx="2" fill="#90a4ae" />
+
+            <!-- Right Tools -->
+            <line x1="270" y1="32" x2="270" y2="168" stroke="#333333" stroke-width="1" />
+            <rect x="276" y="40" width="15" height="6" fill="#333333" />
+            <rect x="276" y="52" width="15" height="6" fill="#333333" />
+            <rect x="276" y="64" width="15" height="6" fill="#333333" />
+          </g>
+
+          <!-- Main Bold Header -->
+          <text x="180" y="360" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000" font-family="'Inter', sans-serif">HANDOFF IN</text>
+          <text x="180" y="405" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000" font-family="'Inter', sans-serif">MOBILE</text>
+          <text x="180" y="450" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#000000" font-family="'Inter', sans-serif">NETWORK</text>
+
+          <!-- Next Page Link -->
+          <text x="250" y="605" fill="#e91e63" font-size="14" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Next page →</text>
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 2: Android Small - 2                     -->
+        <!-- ============================================== -->
+        <g id="frame-2" class="svg-frame-group" transform="translate(570, 30)" onclick="openPrototype('Android Small - 2')">
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 2</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <!-- Back Arrow -->
+          <g transform="translate(20, 24)">
+            <circle cx="12" cy="12" r="12" fill="#1877f2" />
+            <path d="M 14 7 L 9 12 L 14 17" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="9" y1="12" x2="17" y2="12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+          </g>
+
+          <text x="180" y="42" text-anchor="middle" fill="#e91e63" font-size="16" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Handoff:</text>
+
+          <text x="180" y="78" text-anchor="middle" fill="#222222" font-size="12" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Design handoff is the process of</tspan>
+            <tspan x="180" dy="17">handing over a finished design for</tspan>
+            <tspan x="180" dy="17">implementation. It involves</tspan>
+            <tspan x="180" dy="17">transferring a designer's intent,</tspan>
+            <tspan x="180" dy="17">knowledge, and specifications for</tspan>
+            <tspan x="180" dy="17">a design and can include visual</tspan>
+            <tspan x="180" dy="17">elements, user flows, interaction,</tspan>
+            <tspan x="180" dy="17">animation, copy, responsive</tspan>
+            <tspan x="180" dy="17">breakpoints, accessibility, and</tspan>
+            <tspan x="180" dy="17">data validations.</tspan>
+          </text>
+
+          <text x="180" y="295" text-anchor="middle" fill="#e91e63" font-size="16" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Execution:</text>
+
+          <text x="180" y="325" text-anchor="middle" fill="#222222" font-size="12" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Design handoff tools facilitate</tspan>
+            <tspan x="180" dy="17">smoother transitions from design</tspan>
+            <tspan x="180" dy="17">to development. These tools</tspan>
+            <tspan x="180" dy="17">provide engineers with practical</tspan>
+            <tspan x="180" dy="17">documentation, high-fidelity</tspan>
+            <tspan x="180" dy="17">prototypes, and features to</tspan>
+            <tspan x="180" dy="17">communicate and collaborate</tspan>
+            <tspan x="180" dy="17">effectively.</tspan>
+          </text>
+
+          <text x="250" y="605" fill="#e91e63" font-size="14" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Next page →</text>
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 3: Android Small - 4                     -->
+        <!-- ============================================== -->
+        <g id="frame-4" class="svg-frame-group" transform="translate(140, 840)" onclick="openPrototype('Android Small - 4')">
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 4</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <text x="180" y="55" text-anchor="middle" fill="#d81b60" font-size="16" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Why do we need handoff?</text>
+
+          <text x="180" y="95" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Mobile-Assisted handoff is</tspan>
+            <tspan x="180" dy="18">generally used when a mobile</tspan>
+            <tspan x="180" dy="18">phone helps a base station to</tspan>
+            <tspan x="180" dy="18">transfer the call to another</tspan>
+            <tspan x="180" dy="18">base station with better-</tspan>
+            <tspan x="180" dy="18">improvised connectivity and</tspan>
+            <tspan x="180" dy="18">more signal strength. This</tspan>
+            <tspan x="180" dy="18">handoff is used in TDMA</tspan>
+            <tspan x="180" dy="18">technique-based GSM devices.</tspan>
+          </text>
+
+          <text x="180" y="320" text-anchor="middle" fill="#00a8cc" font-size="16" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">What is a handoff in UX?</text>
+
+          <text x="180" y="360" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">The Design Handoff plays a</tspan>
+            <tspan x="180" dy="18">vital role in UX projects, serving</tspan>
+            <tspan x="180" dy="18">as a crucial step where</tspan>
+            <tspan x="180" dy="18">designers transfer their work to</tspan>
+            <tspan x="180" dy="18">the development team.</tspan>
+          </text>
+
+          <text x="250" y="605" fill="#e91e63" font-size="14" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Next page →</text>
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 4: Android Small - 5                     -->
+        <!-- ============================================== -->
+        <g id="frame-5" class="svg-frame-group" transform="translate(610, 780)" onclick="openPrototype('Android Small - 5')">
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 5</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <text x="180" y="65" text-anchor="middle" fill="#000000" font-size="16" font-weight="800" font-family="'Inter', sans-serif">Reasons for Handoff:</text>
+
+          <text x="180" y="110" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Handoff is necessary when a</tspan>
+            <tspan x="180" dy="18">mobile device is moving out of</tspan>
+            <tspan x="180" dy="18">the coverage area of the</tspan>
+            <tspan x="180" dy="18">current cell or when the</tspan>
+            <tspan x="180" dy="18">quality of the connection</tspan>
+            <tspan x="180" dy="18">degrades. The goal is to</tspan>
+            <tspan x="180" dy="18">maintain a reliable and</tspan>
+            <tspan x="180" dy="18">uninterrupted connection.</tspan>
+          </text>
+
+          <text x="180" y="325" text-anchor="middle" fill="#222222" font-size="12.5" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Use styles to define the color,</tspan>
+            <tspan x="180" dy="18">text and any effects applied to</tspan>
+            <tspan x="180" dy="18">objects; or to define the</tspan>
+            <tspan x="180" dy="18">structure and appearance of</tspan>
+            <tspan x="180" dy="18">layout grids.</tspan>
+          </text>
+
+          <text x="250" y="605" fill="#e91e63" font-size="14" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Next page →</text>
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 5: Android Small - 6                     -->
+        <!-- ============================================== -->
+        <g id="frame-6" class="svg-frame-group" transform="translate(1050, 760)" onclick="openPrototype('Android Small - 6')">
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 6</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <text x="180" y="55" text-anchor="middle" fill="#d81b60" font-size="16" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Handoff metrics</text>
+
+          <text x="180" y="95" text-anchor="middle" fill="#222222" font-size="12" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Handoff metrics in a mobile</tspan>
+            <tspan x="180" dy="16">network are measurements and</tspan>
+            <tspan x="180" dy="16">criteria used to determine</tspan>
+            <tspan x="180" dy="16">when and how a handoff</tspan>
+            <tspan x="180" dy="16">should occur. These metrics</tspan>
+            <tspan x="180" dy="16">are crucial for maintaining</tspan>
+            <tspan x="180" dy="16">seamless communication as</tspan>
+            <tspan x="180" dy="16">mobile devices move within the</tspan>
+            <tspan x="180" dy="16">network. Various factors and</tspan>
+            <tspan x="180" dy="16">parameters are considered in</tspan>
+            <tspan x="180" dy="16">making handoff decisions.</tspan>
+            <tspan x="180" dy="16">Here are some key handoff</tspan>
+            <tspan x="180" dy="16">metrics in a mobile network:</tspan>
+          </text>
+
+          <text x="180" y="340" text-anchor="middle" fill="#d81b60" font-size="13" font-weight="600" font-style="italic" font-family="'Inter', sans-serif">
+            <tspan x="180" dy="0">Handoff Hysteresis</tspan>
+            <tspan x="180" dy="20">Signal Strength</tspan>
+            <tspan x="180" dy="20">Signal Quality</tspan>
+            <tspan x="180" dy="20">Distance to Neighbouring Cells</tspan>
+            <tspan x="180" dy="20">Speed of Movement</tspan>
+          </text>
+
+          <text x="250" y="605" fill="#e91e63" font-size="14" font-weight="700" font-style="italic" font-family="'Inter', sans-serif">Next page →</text>
+        </g>
+
+        <!-- ============================================== -->
+        <!-- FRAME 6: Android Small - 7                     -->
+        <!-- ============================================== -->
+        <g id="frame-7" class="svg-frame-group" transform="translate(1470, 760)" onclick="openPrototype('Android Small - 7')">
+          <text x="0" y="-12" fill="#8f8f8f" font-size="12" font-weight="500" font-family="'Inter', sans-serif">Android Small - 7</text>
+          <rect width="360" height="640" fill="#ffffff" filter="url(#frame-shadow)" rx="0" />
+
+          <text x="180" y="330" text-anchor="middle" fill="#ff1493" font-size="34" font-weight="900" font-style="italic" letter-spacing="-0.5" font-family="'Inter', sans-serif">Thank you!!</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Zoom and Viewport Navigation Controls -->
+    <div class="canvas-controls">
+      <button class="zoom-btn" onclick="zoomDelta(-0.15)" title="Zoom Out">−</button>
+      <span class="zoom-text" id="zoomPercent">65%</span>
+      <button class="zoom-btn" onclick="zoomDelta(0.15)" title="Zoom In">+</button>
+      <div style="width:1px; height:18px; background:#555; margin:0 4px;"></div>
+      <button class="zoom-btn" onclick="fitToScreen()" title="Fit to Screen" style="font-size:12px; width:auto; padding:0 6px;">Fit</button>
+      <button class="zoom-btn" onclick="resetZoom()" title="Reset to 100%" style="font-size:12px; width:auto; padding:0 6px;">100%</button>
+    </div>
+  </div>
+
+  <!-- Interactive Presentation Mode Modal (Figma Prototype View) -->
+  <div class="prototype-modal" id="protoModal">
+    <div class="prototype-top-bar">
+      <div class="prototype-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Flow 1
+      </div>
+      <span class="prototype-screen-label" id="currentScreenName">Android Small - 1</span>
+      <button class="prototype-btn" onclick="restartFlow()" title="Restart from beginning">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+        Restart
+      </button>
+      <button class="prototype-btn prototype-btn-close" onclick="closePrototype()">
+        ✕ Close
+      </button>
+    </div>
+
+    <!-- Realistic Mobile Frame Container -->
+    <div class="mobile-device-shell">
+      <div class="device-screen">
+        <!-- Status Bar -->
+        <div class="device-status-bar">
+          <span>9:41</span>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="#333"><path d="M0 8h2v2H0V8zm3-3h2v5H3V5zm3-2h2v7H6V3zm3-3h2v10H9V0z"/></svg>
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="#333"><path d="M1 1h10v8H1V1zm11 2h2v4h-2V3z"/></svg>
+          </div>
+        </div>
+
+        <div class="device-body">
+          <!-- Slide 1: Android Small - 1 -->
+          <div class="proto-slide" id="slide-1">
+            <div style="background:#ded7a8; border:1.5px solid #333; border-radius:6px; padding:8px; margin-bottom:24px; position:relative;">
+              <span style="color:#ff5252; position:absolute; top:4px; left:8px; font-size:14px;">♥</span>
+              <div style="position:absolute; top:6px; right:8px; display:flex; gap:3px;">
+                <span style="width:6px; height:6px; border-radius:50%; background:#4285f4;"></span>
+                <span style="width:6px; height:6px; border-radius:50%; background:#ea4335;"></span>
+                <span style="width:6px; height:6px; border-radius:50%; background:#fbbc05;"></span>
+              </div>
+              <div style="background:#eae4c9; border:1px solid #333; border-radius:4px; padding:6px; margin-top:14px; min-height:90px;">
+                <div style="border-bottom:1px solid #333; padding-bottom:3px; display:flex; gap:3px;">
+                  <span style="width:4px; height:4px; border-radius:50%; background:#333;"></span>
+                  <span style="width:4px; height:4px; border-radius:50%; background:#333;"></span>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:8px;">
+                  <div style="width:20px; display:flex; flex-direction:column; gap:4px;">
+                    <div style="height:8px; background:#d3ccab; border:1px solid #333;"></div>
+                    <div style="height:8px; background:#d3ccab; border:1px solid #333;"></div>
+                    <div style="height:8px; background:#d3ccab; border:1px solid #333;"></div>
+                  </div>
+                  <div style="flex:1; border:1px solid #333; background:#f5f0db; height:60px; padding:4px;">
+                    <div style="height:3px; width:60%; background:#666; margin-bottom:4px;"></div>
+                    <div style="height:2px; width:80%; background:#999; margin-bottom:3px;"></div>
+                    <div style="height:2px; width:70%; background:#999;"></div>
+                  </div>
+                  <div style="width:50px; height:60px; border:1px solid #333; background:#e2dcbd; position:relative;">
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-size:10px;">✕</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align:center; margin:auto 0;">
+              <h1 style="font-size:30px; font-weight:900; line-height:1.2; color:#000; letter-spacing:-0.5px;">
+                HANDOFF IN<br>MOBILE<br>NETWORK
+              </h1>
+            </div>
+
+            <div class="clickable-next" onclick="showChoiceMenu(event)">Next page →</div>
+
+            <!-- Choice popup for the branching noodle in screenshot -->
+            <div class="choice-modal" id="choiceMenu">
+              <span style="font-size:10px; color:#aaa; font-weight:600;">PROTOTYPE BRANCH:</span>
+              <button class="choice-btn" onclick="navigateTo('Android Small - 2')">→ Screen 2: Design Handoff (Handoff & Execution)</button>
+              <button class="choice-btn" onclick="navigateTo('Android Small - 4')">↓ Screen 4: Network Handoff (TDMA / UX)</button>
+            </div>
+          </div>
+
+          <!-- Slide 2: Android Small - 2 -->
+          <div class="proto-slide" id="slide-2">
+            <div class="back-arrow-btn" onclick="navigateTo('Android Small - 1')">←</div>
+            
+            <h2 style="color:#e91e63; font-size:18px; font-weight:700; font-style:italic; text-align:center; margin-bottom:8px;">Handoff:</h2>
+            <p style="font-size:12.5px; line-height:1.5; font-style:italic; text-align:center; color:#222; margin-bottom:20px;">
+              Design handoff is the process of handing over a finished design for implementation. It involves transferring a designer's intent, knowledge, and specifications for a design and can include visual elements, user flows, interaction, animation, copy, responsive breakpoints, accessibility, and data validations.
+            </p>
+
+            <h2 style="color:#e91e63; font-size:18px; font-weight:700; font-style:italic; text-align:center; margin-bottom:8px;">Execution:</h2>
+            <p style="font-size:12.5px; line-height:1.5; font-style:italic; text-align:center; color:#222;">
+              Design handoff tools facilitate smoother transitions from design to development. These tools provide engineers with practical documentation, high-fidelity prototypes, and features to communicate and collaborate effectively.
+            </p>
+
+            <div class="clickable-next" onclick="navigateTo('Android Small - 4')">Next page →</div>
+          </div>
+
+          <!-- Slide 3: Android Small - 4 -->
+          <div class="proto-slide" id="slide-4">
+            <h2 style="color:#d81b60; font-size:18px; font-weight:700; font-style:italic; text-align:center; margin:14px 0 10px;">Why do we need handoff?</h2>
+            <p style="font-size:12.5px; line-height:1.5; font-style:italic; text-align:center; color:#222; margin-bottom:28px;">
+              Mobile-Assisted handoff is generally used when a mobile phone helps a base station to transfer the call to another base station with better-improvised connectivity and more signal strength. This handoff is used in TDMA technique-based GSM devices.
+            </p>
+
+            <h2 style="color:#00a8cc; font-size:18px; font-weight:700; font-style:italic; text-align:center; margin-bottom:10px;">What is a handoff in UX?</h2>
+            <p style="font-size:12.5px; line-height:1.5; font-style:italic; text-align:center; color:#222;">
+              The Design Handoff plays a vital role in UX projects, serving as a crucial step where designers transfer their work to the development team.
+            </p>
+
+            <div class="clickable-next" onclick="navigateTo('Android Small - 5')">Next page →</div>
+          </div>
+
+          <!-- Slide 4: Android Small - 5 -->
+          <div class="proto-slide" id="slide-5">
+            <h2 style="color:#000; font-size:18px; font-weight:800; text-align:center; margin:20px 0 12px;">Reasons for Handoff:</h2>
+            <p style="font-size:13px; line-height:1.5; font-style:italic; text-align:center; color:#222; margin-bottom:34px;">
+              Handoff is necessary when a mobile device is moving out of the coverage area of the current cell or when the quality of the connection degrades. The goal is to maintain a reliable and uninterrupted connection.
+            </p>
+
+            <p style="font-size:13px; line-height:1.5; font-style:italic; text-align:center; color:#222;">
+              Use styles to define the color, text and any effects applied to objects; or to define the structure and appearance of layout grids.
+            </p>
+
+            <div class="clickable-next" onclick="navigateTo('Android Small - 6')">Next page →</div>
+          </div>
+
+          <!-- Slide 5: Android Small - 6 -->
+          <div class="proto-slide" id="slide-6">
+            <h2 style="color:#d81b60; font-size:18px; font-weight:700; font-style:italic; text-align:center; margin:10px 0 8px;">Handoff metrics</h2>
+            <p style="font-size:12px; line-height:1.45; font-style:italic; text-align:center; color:#222; margin-bottom:20px;">
+              Handoff metrics in a mobile network are measurements and criteria used to determine when and how a handoff should occur. These metrics are crucial for maintaining seamless communication as mobile devices move within the network. Various factors and parameters are considered in making handoff decisions. Here are some key handoff metrics in a mobile network:
+            </p>
+
+            <div style="color:#d81b60; font-size:13.5px; font-weight:600; font-style:italic; text-align:center; display:flex; flex-direction:column; gap:8px;">
+              <span>Handoff Hysteresis</span>
+              <span>Signal Strength</span>
+              <span>Signal Quality</span>
+              <span>Distance to Neighbouring Cells</span>
+              <span>Speed of Movement</span>
+            </div>
+
+            <div class="clickable-next" onclick="navigateTo('Android Small - 7')">Next page →</div>
+          </div>
+
+          <!-- Slide 6: Android Small - 7 -->
+          <div class="proto-slide" id="slide-7">
+            <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+              <h1 style="color:#ff1493; font-size:36px; font-weight:900; font-style:italic; letter-spacing:-0.5px; text-shadow:0 0 20px rgba(255,20,147,0.25);">
+                Thank you!!
+              </h1>
+            </div>
+
+            <div class="clickable-next" onclick="restartFlow()" style="align-self:center; font-size:12px; color:#666;">↺ Start again from Flow 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Figma Live Connection Runner Modal -->
+  <div class="prototype-modal" id="figmaScriptModal" style="z-index: 700;">
+    <div style="background:#222; border:1px solid #444; border-radius:16px; width:90%; max-width:680px; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.8); color:#e0e0e0; display:flex; flex-direction:column; gap:16px; max-height:90vh; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="background:#6366f1; color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">FIGMA PROTOTYPE READY</span>
+          <h2 style="font-size:16px; color:#fff;">Run Flow 1 with Page Connections in Figma</h2>
+        </div>
+        <button onclick="closeFigmaScriptModal()" style="background:transparent; border:none; color:#888; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+
+      <p style="font-size:13px; color:#b0b0b0; line-height:1.5;">
+        Standard SVG only copies visual shapes. To make Figma's <strong>Play (▶) Presentation mode</strong> run with real interactive page transitions and blue connection noodles, choose one of these quick methods:
+      </p>
+
+      <!-- Option 1: 1-Click Figma Generator Script -->
+      <div style="background:#181818; border:1px solid #333; border-radius:8px; padding:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h3 style="font-size:13px; color:#6366f1; font-weight:700;">⚡ Option 1: 10-Second Console Run (No installation required)</h3>
+          <button onclick="copyGeneratorScript()" style="background:#6366f1; border:none; color:#fff; font-size:12px; font-weight:600; padding:6px 12px; border-radius:6px; cursor:pointer;">
+            📋 Copy Figma Script
+          </button>
+        </div>
+        <ol style="font-size:12px; line-height:1.6; color:#bbb; padding-left:18px;">
+          <li>Open your Figma canvas (web browser or Figma app).</li>
+          <li>Open Developer Console (<kbd style="background:#333; padding:1px 4px; border-radius:3px;">F12</kbd> or <kbd style="background:#333; padding:1px 4px; border-radius:3px;">Ctrl + Shift + J</kbd>).</li>
+          <li>Paste the script and press <kbd style="background:#333; padding:1px 4px; border-radius:3px;">Enter</kbd>.</li>
+          <li>Figma automatically generates all 6 frames, illustrations, and <strong>sets all native page connection noodles + Flow 1</strong>!</li>
+        </ol>
+      </div>
+
+      <!-- Option 2: 15-second Manual Linking -->
+      <div style="background:#181818; border:1px solid #333; border-radius:8px; padding:14px;">
+        <h3 style="font-size:13px; color:#10b981; font-weight:700; margin-bottom:6px;">🖱️ Option 2: Connect via Figma's "Prototype" Tab</h3>
+        <p style="font-size:12px; line-height:1.5; color:#bbb; margin-bottom:8px;">
+          If you already pasted the frames via <span style="color:#0d99ff;">"Copy for Figma"</span>:
+        </p>
+        <ol style="font-size:12px; line-height:1.6; color:#bbb; padding-left:18px;">
+          <li>In Figma, click the <strong>"Prototype"</strong> tab in the right sidebar.</li>
+          <li>Select the <strong>"Next page →"</strong> layer in Frame 1, and drag its blue circle handle to <strong>Android Small - 4</strong> (or 2).</li>
+          <li>Connect Frame 4 → 5, 5 → 6, 6 → 7.</li>
+          <li>Click the <strong>Play (▶)</strong> button at the top-right of Figma!</li>
+        </ol>
+      </div>
+
+      <!-- Option 3: Run directly right here -->
+      <div style="background:#181818; border:1px solid #333; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="font-size:13px; color:#ff1493; font-weight:700;">📱 Option 3: Test Interactive Prototype Right Now</h3>
+          <p style="font-size:12px; color:#888;">Runs Flow 1 with full mobile animations right inside this single file without needing Figma.</p>
+        </div>
+        <button onclick="closeFigmaScriptModal(); openPrototype('Android Small - 1');" style="background:#10b981; border:none; color:#fff; font-size:12px; font-weight:600; padding:8px 14px; border-radius:6px; cursor:pointer;">
+          ▶ Launch Flow 1
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copied Toast -->
+  <div class="toast" id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toastMsg">Copied! Switch to Figma and press Ctrl + V</span>
+  </div>
+
+  <script>
+    function openFigmaScriptModal() {
+      document.getElementById('figmaScriptModal').classList.add('active');
+    }
+
+    function closeFigmaScriptModal() {
+      document.getElementById('figmaScriptModal').classList.remove('active');
+    }
+
+    async function copyGeneratorScript() {
+      const scriptCode = `// Figma 1-Click Generator with Live Connections
+(async function() {
+  await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+  await figma.loadFontAsync({ family: "Inter", style: "Bold" });
+  await figma.loadFontAsync({ family: "Inter", style: "Italic" });
+  await figma.loadFontAsync({ family: "Inter", style: "Bold Italic" });
+  const helperText = (parent, text, x, y, size, color, style="Regular", align="LEFT", width=null) => {
+    const t = figma.createText();
+    try { t.fontName = { family: "Inter", style: style }; } catch(e){ t.fontName = { family: "Inter", style: "Regular" }; }
+    t.characters = text; t.fontSize = size; t.x = x; t.y = y;
+    t.fills = [{ type: 'SOLID', color: color }];
+    t.textAlignHorizontal = align;
+    if (width) { t.resize(width, t.height); t.textAutoResize = "HEIGHT"; }
+    parent.appendChild(t); return t;
+  };
+  const createBtn = (parent) => {
+    const b = figma.createFrame(); b.name = "Next page button"; b.fills = []; b.resize(110, 32); b.x = 230; b.y = 590;
+    const t = figma.createText(); t.fontName = { family: "Inter", style: "Bold Italic" }; t.characters = "Next page →";
+    t.fontSize = 14; t.fills = [{ type: 'SOLID', color: { r: 0.91, g: 0.12, b: 0.39 } }]; t.x = 10; t.y = 6;
+    b.appendChild(t); parent.appendChild(b); return b;
+  };
+  const linkProto = (src, dest) => {
+    src.reactions = [{ trigger: { type: "ON_CLICK" }, actions: [{ type: "NODE", destinationId: dest.id, navigation: "NAVIGATE", transition: { type: "DISSOLVE", duration: 0.3 } }] }];
+  };
+  const f1 = figma.createFrame(); f1.name = "Android Small - 1"; f1.resize(360, 640); f1.x = 80; f1.y = 80; f1.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  helperText(f1, "HANDOFF IN\\nMOBILE\\nNETWORK", 20, 360, 28, { r: 0, g: 0, b: 0 }, "Bold", "CENTER", 320);
+  const f1Next = createBtn(f1);
+  const f2 = figma.createFrame(); f2.name = "Android Small - 2"; f2.resize(360, 640); f2.x = 570; f2.y = 30; f2.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  const back = figma.createFrame(); back.name = "Back Button"; back.resize(26, 26); back.cornerRadius = 13; back.x = 20; back.y = 24; back.fills = [{ type: 'SOLID', color: { r: 0.09, g: 0.47, b: 0.95 } }];
+  helperText(back, "←", 6, 2, 16, { r: 1, g: 1, b: 1 }, "Bold"); f2.appendChild(back);
+  helperText(f2, "Handoff:", 20, 38, 16, { r: 0.91, g: 0.12, b: 0.39 }, "Bold Italic", "CENTER", 320);
+  helperText(f2, "Design handoff is the process of handing over a finished design for implementation. It involves transferring a designer's intent, knowledge, and specifications for a design and can include visual elements, user flows, interaction, animation, copy, responsive breakpoints, accessibility, and data validations.", 25, 75, 12, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  helperText(f2, "Execution:", 20, 290, 16, { r: 0.91, g: 0.12, b: 0.39 }, "Bold Italic", "CENTER", 320);
+  helperText(f2, "Design handoff tools facilitate smoother transitions from design to development. These tools provide engineers with practical documentation, high-fidelity prototypes, and features to communicate and collaborate effectively.", 25, 325, 12, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  const f2Next = createBtn(f2);
+  const f4 = figma.createFrame(); f4.name = "Android Small - 4"; f4.resize(360, 640); f4.x = 140; f4.y = 840; f4.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  helperText(f4, "Why do we need handoff?", 20, 48, 16, { r: 0.85, g: 0.11, b: 0.38 }, "Bold Italic", "CENTER", 320);
+  helperText(f4, "Mobile-Assisted handoff is generally used when a mobile phone helps a base station to transfer the call to another base station with better-improvised connectivity and more signal strength. This handoff is used in TDMA technique-based GSM devices.", 25, 90, 12.5, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  helperText(f4, "What is a handoff in UX?", 20, 310, 16, { r: 0.0, g: 0.66, b: 0.8 }, "Bold Italic", "CENTER", 320);
+  helperText(f4, "The Design Handoff plays a vital role in UX projects, serving as a crucial step where designers transfer their work to the development team.", 25, 350, 12.5, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  const f4Next = createBtn(f4);
+  const f5 = figma.createFrame(); f5.name = "Android Small - 5"; f5.resize(360, 640); f5.x = 610; f5.y = 780; f5.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  helperText(f5, "Reasons for Handoff:", 20, 60, 16, { r: 0, g: 0, b: 0 }, "Bold", "CENTER", 320);
+  helperText(f5, "Handoff is necessary when a mobile device is moving out of the coverage area of the current cell or when the quality of the connection degrades. The goal is to maintain a reliable and uninterrupted connection.", 25, 105, 12.5, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  helperText(f5, "Use styles to define the color, text and any effects applied to objects; or to define the structure and appearance of layout grids.", 25, 315, 12.5, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  const f5Next = createBtn(f5);
+  const f6 = figma.createFrame(); f6.name = "Android Small - 6"; f6.resize(360, 640); f6.x = 1050; f6.y = 760; f6.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  helperText(f6, "Handoff metrics", 20, 48, 16, { r: 0.85, g: 0.11, b: 0.38 }, "Bold Italic", "CENTER", 320);
+  helperText(f6, "Handoff metrics in a mobile network are measurements and criteria used to determine when and how a handoff should occur. These metrics are crucial for maintaining seamless communication as mobile devices move within the network. Various factors and parameters are considered in making handoff decisions. Here are some key handoff metrics in a mobile network:", 25, 88, 12, { r: 0.13, g: 0.13, b: 0.13 }, "Italic", "CENTER", 310);
+  helperText(f6, "Handoff Hysteresis\\nSignal Strength\\nSignal Quality\\nDistance to Neighbouring Cells\\nSpeed of Movement", 20, 325, 13, { r: 0.85, g: 0.11, b: 0.38 }, "Bold Italic", "CENTER", 320);
+  const f6Next = createBtn(f6);
+  const f7 = figma.createFrame(); f7.name = "Android Small - 7"; f7.resize(360, 640); f7.x = 1470; f7.y = 760; f7.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+  helperText(f7, "Thank you!!", 20, 300, 36, { r: 1, g: 0.08, b: 0.58 }, "Bold Italic", "CENTER", 320);
+  linkProto(f1Next, f4); linkProto(back, f1); linkProto(f2Next, f4); linkProto(f4Next, f5); linkProto(f5Next, f6); linkProto(f6Next, f7);
+  figma.currentPage.flowStartingPoints = [{ nodeId: f1.id, name: "Flow 1" }];
+  figma.viewport.scrollAndZoomIntoView([f1, f2, f4, f5, f6, f7]);
+  figma.notify("🚀 Generated prototype with active page connections! Click Play (▶) to run Flow 1.");
+})();`;
+      try {
+        await navigator.clipboard.writeText(scriptCode);
+        showToast('✓ Copied script! Paste into Figma Console (F12) and press Enter');
+      } catch (e) {
+        showToast('Script copied!');
+      }
+    }
+    // Canvas Pan & Zoom State
+    let zoom = 0.65;
+    let panX = 40;
+    let panY = 20;
+    let isDragging = false;
+    let startX, startY;
+
+    const viewport = document.getElementById('viewport');
+    const wrapper = document.getElementById('canvasWrapper');
+    const zoomPercentEl = document.getElementById('zoomPercent');
+
+    function updateTransform() {
+      wrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+      zoomPercentEl.textContent = Math.round(zoom * 100) + '%';
+    }
+
+    viewport.addEventListener('mousedown', (e) => {
+      // Ignore if clicking on prototype frame
+      if (e.target.closest('.canvas-controls')) return;
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      viewport.classList.add('dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      viewport.classList.remove('dragging');
+    });
+
+    // Zoom on wheel
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+      const mouseX = e.clientX - viewport.getBoundingClientRect().left;
+      const mouseY = e.clientY - viewport.getBoundingClientRect().top;
+
+      const newZoom = Math.max(0.2, Math.min(2.5, zoom * zoomFactor));
+
+      panX = mouseX - (mouseX - panX) * (newZoom / zoom);
+      panY = mouseY - (mouseY - panY) * (newZoom / zoom);
+      zoom = newZoom;
+
+      updateTransform();
+    }, { passive: false });
+
+    function zoomDelta(delta) {
+      zoom = Math.max(0.2, Math.min(2.5, zoom + delta));
+      updateTransform();
+    }
+
+    function resetZoom() {
+      zoom = 1;
+      panX = 80;
+      panY = 60;
+      updateTransform();
+    }
+
+    function fitToScreen() {
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      const sw = 1850;
+      const sh = 1550;
+      zoom = Math.min((vw - 80) / sw, (vh - 80) / sh);
+      panX = (vw - sw * zoom) / 2;
+      panY = (vh - sh * zoom) / 2;
+      updateTransform();
+    }
+
+    // Initial positioning
+    window.addEventListener('load', () => {
+      fitToScreen();
+    });
+
+    // ==========================================
+    // PROTOTYPE FLOW SIMULATION
+    // ==========================================
+    const screenMap = {
+      'Android Small - 1': 'slide-1',
+      'Android Small - 2': 'slide-2',
+      'Android Small - 4': 'slide-4',
+      'Android Small - 5': 'slide-5',
+      'Android Small - 6': 'slide-6',
+      'Android Small - 7': 'slide-7'
+    };
+
+    let activeScreen = 'Android Small - 1';
+
+    function openPrototype(screenName) {
+      document.getElementById('protoModal').classList.add('active');
+      document.getElementById('btnModeProto').classList.add('active');
+      document.getElementById('btnModeDesign').classList.remove('active');
+      navigateTo(screenName || 'Android Small - 1');
+    }
+
+    function closePrototype() {
+      document.getElementById('protoModal').classList.remove('active');
+      document.getElementById('btnModeProto').classList.remove('active');
+      document.getElementById('btnModeDesign').classList.add('active');
+      hideChoiceMenu();
+    }
+
+    function setMode(mode) {
+      if (mode === 'design') {
+        closePrototype();
+      } else {
+        openPrototype('Android Small - 1');
+      }
+    }
+
+    function navigateTo(screenName) {
+      hideChoiceMenu();
+      activeScreen = screenName;
+      document.getElementById('currentScreenName').textContent = screenName;
+
+      const targetSlideId = screenMap[screenName];
+      document.querySelectorAll('.proto-slide').forEach(s => {
+        s.classList.remove('active');
+      });
+
+      const targetEl = document.getElementById(targetSlideId);
+      if (targetEl) {
+        targetEl.classList.add('active');
+      }
+    }
+
+    function restartFlow() {
+      navigateTo('Android Small - 1');
+    }
+
+    function showChoiceMenu(e) {
+      e.stopPropagation();
+      document.getElementById('choiceMenu').classList.toggle('open');
+    }
+
+    function hideChoiceMenu() {
+      const menu = document.getElementById('choiceMenu');
+      if (menu) menu.classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#choiceMenu') && !e.target.closest('.clickable-next')) {
+        hideChoiceMenu();
+      }
+    });
+
+    // ==========================================
+    // FIGMA EXPORT & CLIPBOARD INTEGRATION
+    // ==========================================
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    function getFigmaSvgCode() {
+      const svg = document.getElementById('figmaSvgRoot');
+      const serializer = new XMLSerializer();
+      return serializer.serializeToString(svg);
+    }
+
+    async function copyFigmaSVG() {
+      const svgCode = getFigmaSvgCode();
+      try {
+        await navigator.clipboard.writeText(svgCode);
+        showToast('✓ Copied to clipboard! Open Figma & press Ctrl+V to paste frames.');
+      } catch (err) {
+        // Fallback for clipboard
+        const textarea = document.createElement('textarea');
+        textarea.value = svgCode;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✓ Copied to clipboard! Open Figma & press Ctrl+V to paste frames.');
+      }
+    }
+
+    function downloadFigmaSVG() {
+      const svgCode = getFigmaSvgCode();
+      const blob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'handoff_in_mobile_network.svg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('✓ Downloaded handoff_in_mobile_network.svg!');
+    }
+  </script>
+</body>
+</html>
